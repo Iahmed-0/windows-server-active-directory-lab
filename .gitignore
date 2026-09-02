@@ -1,0 +1,18 @@
+# Large virtual-machine and installation files
+*.iso
+*.vmdk
+*.vmem
+*.vmss
+*.vmsn
+
+# Secrets and exported credentials
+*.pfx
+*.pem
+*.key
+.env
+credentials*
+secrets*
+
+# Keep unredacted evidence out of the public repository
+images/raw/
+private-notes/
