@@ -2,8 +2,6 @@
 
 A concise walkthrough for building a Windows domain in VMware and practicing users, security groups, organizational units, Group Policy, DNS, DHCP, and access troubleshooting.
 
-> **Tutorial reference:** Adapted from Hugh Chanetsa's MIT-licensed Active Directory lab. The six screenshots are credited source examples, not captures from this repository owner's environment. The original uses VirtualBox and `192.168.1.x`; this walkthrough uses VMware and `192.168.100.x`. Follow the settings below. Full references are at the end.
-
 ## Lab environment
 
 | Component | Example configuration |
@@ -37,9 +35,9 @@ Use a subnet that does not overlap your host, VPN, or other virtual networks. Us
 3. Keep DNS Server and Global Catalog enabled, choose compatible wizard defaults, and set a unique Directory Services Restore Mode password. Resolve prerequisite errors, install, and restart.
 4. Sign in as `HUGHDOMAIN\Administrator`. Open **Active Directory Users and Computers (ADUC)** and confirm that the domain appears.
 
-![Domain promotion completing in the original lab](images/source/01-domain-promotion.png)
+![Domain promotion completing](images/source/01-domain-promotion.png)
 
-*Source example: domain promotion completes and Windows announces a restart. Credit: Hugh Chanetsa, MIT License.*
+*Domain promotion completes and Windows announces a restart.*
 
 ## 3. Check DNS and join the client
 
@@ -58,9 +56,9 @@ For reverse DNS, create an AD-integrated IPv4 reverse zone for network ID `192.1
 nslookup 192.168.100.10 192.168.100.10
 ```
 
-![AD service-record queries and a DNS diagnostic in the original lab](images/source/02-dns-validation.png)
+![AD service-record queries and a DNS diagnostic](images/source/02-dns-validation.png)
 
-*Source example: DNS service discovery and diagnostics. Its addresses differ from this walkthrough. Credit: Hugh Chanetsa, MIT License.*
+*DNS service discovery and diagnostics. Use the addresses specified in this walkthrough.*
 
 ## 4. Organize users, computers and groups
 
@@ -76,7 +74,7 @@ Sign in to the client as `HUGHDOMAIN\alex.lee` and run `whoami` and `whoami /gro
 
 ![Organizational units displayed in Active Directory Users and Computers](images/source/03-organizational-units.png)
 
-*Source example: a larger OU hierarchy. This walkthrough uses the smaller `Lab` structure above. Credit: Hugh Chanetsa, MIT License.*
+*An example OU hierarchy. This walkthrough uses the smaller `Lab` structure above.*
 
 **Key distinction:** OUs organize objects and receive policy links; security groups grant permissions. The built-in Users and Computers containers are not OUs.
 
@@ -100,7 +98,7 @@ This additional exercise uses a small test share on the lab server; a production
 
 ![Control Panel restriction configured in Group Policy](images/source/04-control-panel-policy.png)
 
-*Source example: the restriction's policy setting. Credit: Hugh Chanetsa, MIT License.*
+*The Control Panel restriction enabled in Group Policy.*
 
 As Alex on the client, use **Command Prompt**:
 
@@ -115,7 +113,7 @@ Sign out/in if required. Confirm the GPO appears in the **user** results and Con
 
 ![Restriction message displayed when opening Control Panel](images/source/05-policy-validation.png)
 
-*Source example: the client displays a restriction message. Credit: Hugh Chanetsa, MIT License.*
+*The client displays a restriction message when opening Control Panel.*
 
 **Why:** User settings follow the user's OU. A configured GPO alone does not prove it applied; pair `gpresult` with observed behavior.
 
@@ -134,9 +132,9 @@ ipconfig /all
 
 Confirm an address in the pool, **DHCP Server** and **DNS Servers** both `192.168.100.10`, and a matching lease under **DHCP → IPv4 → Lab Scope → Address Leases**. Repeat the DNS and domain tests afterward.
 
-![Client leases listed in the original DHCP console](images/source/06-dhcp-leases.png)
+![Client leases listed in the DHCP console](images/source/06-dhcp-leases.png)
 
-*Source example: two clients have leases; this smaller lab needs one matching client lease. Credit: Hugh Chanetsa, MIT License.*
+*Two client leases are shown; this smaller lab needs one matching client lease.*
 
 ## Validation and troubleshooting
 
@@ -154,6 +152,8 @@ Record your own build and observations in the [lab notes](docs/lab-notes-templat
 
 ## References and attribution
 
+This walkthrough is adapted from Hugh Chanetsa's MIT-licensed Active Directory lab. All six screenshots show his original environment, not captures from this repository owner's build. The original uses VirtualBox and `192.168.1.x`; this guide uses VMware and `192.168.100.x`, a smaller OU structure, and an added access-testing exercise. Follow the written settings in this guide.
+
 - **Original tutorial and screenshots:** Hugh Chanetsa, [Hugh-Kumbi Active Directory Lab](https://github.com/Hugh-Kumbi/Hugh-Kumbi-Active-Directory-Lab), copyright 2025, MIT License. Source revision: [`7fe4c1f`](https://github.com/Hugh-Kumbi/Hugh-Kumbi-Active-Directory-Lab/tree/7fe4c1f9f6ff6871b2944f1d9fd18f8e8076e247).
 - **Image-by-image credits and adaptation notes:** [Third-party notices](THIRD_PARTY_NOTICES.md). The original [MIT notice](licenses/Hugh-Chanetsa-MIT.txt) is retained with the reused material.
 - Microsoft Learn: [Install Active Directory Domain Services](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/deploy/install-active-directory-domain-services--level-100-).
@@ -162,4 +162,3 @@ Record your own build and observations in the [lab notes](docs/lab-notes-templat
 - Microsoft Learn: [Install and configure DHCP Server](https://learn.microsoft.com/en-us/windows-server/networking/technologies/dhcp/quickstart-install-configure-dhcp-server).
 - Broadcom: [Using the Virtual Network Editor in VMware Workstation](https://knowledge.broadcom.com/external/article/339371/using-the-virtual-network-editor-in-vmwa.html).
 
-This summary condenses the illustrated tutorial into a VMware-oriented learning guide. It simplifies the OU design, changes the subnet, and adds an access-testing exercise. Source screenshots remain unmodified and are examples to learn from; record your own captures and results as you complete the lab.
